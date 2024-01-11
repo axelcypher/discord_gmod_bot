@@ -71,8 +71,8 @@ let isBotReady = false;
 //---- Start modified Code ----
 const handleGamedigQuery = () => Gamedig.query({
   type: 'garrysmod',
-  host: GAMESERVER_HOST,
-  port: GAMESERVER_QUERY_PORT
+  host: 10.60.0.2,
+  port: 27015
 }).catch((error) => { console.log("Server is offline") });
 
 function activityupdate(){
@@ -90,6 +90,8 @@ bot.on('ready', async message => {
 
   //---- Start modified Code ----
   console.log(`${bot.user.username} is online!`);
+  console.log("I am ready!");
+  console.log(`Connecting to Server ${GAMESERVER_HOST}...`);
   bot.setInterval(activityupdate,30000);
   //---- End modified Code ----
 
@@ -100,6 +102,7 @@ bot.on('ready', async message => {
     log(chalk.green('Bot is ready to mute them all! :)'));
     br();
   });
+  
 });
 
 bot.on('error', (err) => {
