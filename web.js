@@ -86,7 +86,7 @@ function activityupdate(){
 
 
 
-bot.on('ready', () => {
+bot.on('ready', async message => {
 
   //---- Start modified Code ----
   console.log(`${bot.user.username} is online!`);
