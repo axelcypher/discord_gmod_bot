@@ -84,7 +84,7 @@ bot.on('ready', () => {
       setInterval(() => {
           gamedig.query({
         			type: 'garrysmod',
-              host: '10.60.0.2',
+              host: 'game.themightyaxel.de',
               port: '27015'
         	}).then((state) => {							 
         			bot.user.setActivity(`${state.players.length}/${state.maxplayers} online!`, {type: "PLAYING"});
