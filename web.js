@@ -65,10 +65,10 @@ const requests = [];
 //create discord client
 const bot = new Discord.Client({
   intents: [ 
-    Discord.GatewayIntentBits.Guilds,
-		Discord.GatewayIntentBits.GuildMessages,
-		Discord.GatewayIntentBits.MessageContent,
-		Discord.GatewayIntentBits.GuildMembers,
+    	Discord.GatewayIntentBits.Guilds,
+	Discord.GatewayIntentBits.GuildMessages,
+	Discord.GatewayIntentBits.MessageContent,
+	Discord.GatewayIntentBits.GuildMembers,
   ],
 });
 bot.login(DISCORD_TOKEN);
@@ -93,8 +93,8 @@ bot.on('ready', () => {
   setInterval(() => {
 		gamedig.query({
         		type: 'garrysmod',
-              		host: '10.60.0.2',
-              		port: '27015'
+              		host: '${GAMESERVER_HOST}',
+              		port: '${GAMESERVER_QUERY_PORT}'
 		}).then((state) => {							 
 			bot.user.setActivity(`${state.players.length}/${state.maxplayers} online!`);
               		console.log(`${state.players.length}/${state.maxplayers} online!`);
