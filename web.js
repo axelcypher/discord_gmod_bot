@@ -84,12 +84,14 @@ bot.on('ready', () => {
       setInterval(() => {
           gamedig.query({
         			type: 'garrysmod',
-              host: 'GAMESERVER_HOST',
-              port: 'GAMESERVER_QUERY_PORT'
+              host: '10.60.0.2',
+              port: '27015'
         	}).then((state) => {							 
         			bot.user.setActivity(`${state.players.length}/${state.maxplayers} online!`, {type: "PLAYING"});
+              console.log(`${state.players.length}/${state.maxplayers} online!`);
         	}).catch((error) => {
         		  bot.user.setActivity(`Currently offline!`, {type: "PLAYING"});
+              console.log(`Currently offline!`);
           });
       }, 10000); 
   //bot.setInterval(activityupdate(),3000);
