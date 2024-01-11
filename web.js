@@ -39,6 +39,12 @@ const log = (...msgs) => {
 const error = (...msgs) => console.error(chalk.red(...msgs));
 const br = newLine = () => console.log();
 
+const MESSAGE_CODES = {
+    "PLAYERS": "players",
+    "INVITE": "invite",
+    "BOT_INFO": "botinfo"
+  };
+
 slog('Constants: ');
 slog(`  VERSION: ${chalk.bold(VERSION)} (${typeof VERSION})`);
 slog(`  DEBUG: ${chalk.bold(DEBUG)} (${typeof DEBUG})`);
@@ -63,7 +69,7 @@ const requests = [];
 
 //create discord client
 const bot = new Discord.Client();
-bot.login(DISCORD_TOKEN);
+
 let isBotReady = false;
 
 
@@ -71,8 +77,8 @@ let isBotReady = false;
 //---- Start modified Code ----
 const handleGamedigQuery = () => Gamedig.query({
   type: 'garrysmod',
-  host: '10.60.0.2',
-  port: '27015'
+  host: '${GAMESERVER_HOST}',
+  port: '${GAMESERVER_QUERY_PORT}'
 }).catch((error) => { console.log("Server is offline") });
 
 function activityupdate(){
@@ -92,7 +98,13 @@ bot.on('ready', async message => {
   console.log(`${bot.user.username} is online!`);
   console.log("I am ready!");
   console.log(`Connecting to Server ${GAMESERVER_HOST}...`);
-  bot.setInterval(activityupdate,30000);
+  bot.setInterval({
+    handleGamedigQuery().then((state) => {
+        var status = state.players.length + " in " + state.map;
+        bot.user.setActivity(status, { type: 'PLAYING' })
+        console.log("Bot activity status updated!")
+    });
+  },3000);
   //---- End modified Code ----
 
 
@@ -380,3 +392,6 @@ http.createServer((req, res) => {
     setTimeout(keepAliveReq, 3 * 1000); // load first attempt after 3 seconds.
   }
 });
+
+
+bot.login(DISCORD_TOKEN);
