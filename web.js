@@ -5,6 +5,7 @@ const Discord = require('discord.js');
 const http = require('http');
 const https = require('https');
 const chalk = require('chalk');
+const Gamedig = require('gamedig');
 const packageData = require('./package');
 
 const VERSION = String(packageData.version);
@@ -50,6 +51,8 @@ slog(`  API_KEY: ${chalk.bold(API_KEY)} (${typeof API_KEY})`);
 br(); // New Line
 
 
+
+
 let discordGuild;
 
 const requests = [];
@@ -59,7 +62,30 @@ const bot = new Discord.Client();
 bot.login(DISCORD_TOKEN);
 let isBotReady = false;
 
+
+
+//---- Start modified Code ----
+const handleGamedigQuery = () => Gamedig.query(gamedigConfig).catch((error) => { console.log("Server is offline") });
+
+function activityupdate(){
+  handleGamedigQuery().then((state) => {
+      var status = state.players.length + " in " + state.map;
+      bot.user.setActivity(status, { type: 'PLAYING' })
+      console.log("Bot activity status updated!")
+  });
+};
+//---- End modified Code ----
+
+
+
 bot.on('ready', () => {
+
+  //---- Start modified Code ----
+  console.log(`${bot.user.username} is online!`);
+  bot.setInterval(activityupdate,30000);
+  //---- End modified Code ----
+
+
   bot.guilds.fetch(DISCORD_GUILD).then(data => {
     discordGuild = data;
     isBotReady = true;
