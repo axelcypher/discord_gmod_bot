@@ -71,8 +71,8 @@ let isBotReady = false;
 //---- Start modified Code ----
 const handleGamedigQuery = () => Gamedig.query({
   type: 'garrysmod',
-  host: 10.60.0.2,
-  port: 27015
+  host: '10.60.0.2',
+  port: '27015'
 }).catch((error) => { console.log("Server is offline") });
 
 function activityupdate(){
