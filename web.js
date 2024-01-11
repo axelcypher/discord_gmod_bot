@@ -64,7 +64,12 @@ const requests = [];
 
 //create discord client
 const bot = new Discord.Client({
-  intents: [ Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_VOICE_STATES, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILD_INVITES, Discord.Intents.FLAGS.GUILD_PRESENCES ]
+  intents: [ 
+    Discord.GatewayIntentBits.Guilds,
+		Discord.GatewayIntentBits.GuildMessages,
+		Discord.GatewayIntentBits.MessageContent,
+		Discord.GatewayIntentBits.GuildMembers,
+  ],
 });
 bot.login(DISCORD_TOKEN);
 let isBotReady = false;
