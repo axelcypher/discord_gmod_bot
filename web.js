@@ -17,6 +17,7 @@ const DISCORD_TOKEN = String(process.env.DISCORD_TOKEN);
 const KEEPALIVE_HOST = String(process.env.KEEPALIVE_HOST);
 const KEEPALIVE_PORT = Number(process.env.KEEPALIVE_PORT) || PORT;
 const KEEPALIVE_ENABLED = Boolean(process.env.KEEPALIVE_ENABLED == 1);
+const GAMESERVER_HOST = String(process.env.GAMESERVER_HOST);
 const API_KEY = String(process.env.API_KEY) || false;
 
 // Secure logging (for initial log of information)
@@ -47,6 +48,7 @@ slog(`  DISCORD_TOKEN: ${chalk.bold(DISCORD_TOKEN)} (${typeof DISCORD_TOKEN})`);
 slog(`  KEEPALIVE_HOST: ${chalk.bold(KEEPALIVE_HOST)} (${typeof KEEPALIVE_HOST})`);
 slog(`  KEEPALIVE_PORT: ${chalk.bold(KEEPALIVE_PORT)} (${typeof KEEPALIVE_PORT})`);
 slog(`  KEEPALIVE_ENABLED: ${chalk.bold(KEEPALIVE_ENABLED)} (${typeof KEEPALIVE_ENABLED})`);
+slog(`  GAMESERVER_HOST: ${chalk.bold(GAMESERVER_HOST)} (${typeof GAMESERVER_HOST})`);
 slog(`  API_KEY: ${chalk.bold(API_KEY)} (${typeof API_KEY})`);
 br(); // New Line
 
@@ -65,7 +67,10 @@ let isBotReady = false;
 
 
 //---- Start modified Code ----
-const handleGamedigQuery = () => Gamedig.query(gamedigConfig).catch((error) => { console.log("Server is offline") });
+const handleGamedigQuery = () => Gamedig.query({
+  type: 'garrysmod',
+  host: '10.60.0.2'
+}).catch((error) => { console.log("Server is offline") });
 
 function activityupdate(){
   handleGamedigQuery().then((state) => {
