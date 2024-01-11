@@ -102,13 +102,7 @@ bot.on('ready', () => {
   console.log(`${bot.user.username} is online!`);
   console.log("I am ready!");
   console.log(`Connecting to Server ${GAMESERVER_HOST}...`);
-  bot.setInterval({
-    handleGamedigQuery().then((state) => {
-        var status = state.players.length + " in " + state.map;
-        bot.user.setActivity(status, { type: 'PLAYING' })
-        console.log("Bot activity status updated!")
-    });
-  },3000);
+  bot.setInterval(activityupdate(),3000);
   //---- End modified Code ----
 });
 
