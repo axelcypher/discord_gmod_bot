@@ -10,14 +10,15 @@ const packageData = require('./package');
 
 const VERSION = String(packageData.version);
 const DEBUG = Boolean(process.env.DEBUG == 1);
-const PORT = Number(process.env.PORT) || 37405; //unused port and since now the OFFICIAL ttt_discord_bot port ;)
+const PORT = Number(process.env.PORT) || 8154; //unused port and since now the OFFICIAL ttt_discord_bot port ;)
 const DISCORD_GUILD = String(process.env.DISCORD_GUILD);
 const DISCORD_CHANNEL = String(process.env.DISCORD_CHANNEL);
 const DISCORD_TOKEN = String(process.env.DISCORD_TOKEN);
 const KEEPALIVE_HOST = String(process.env.KEEPALIVE_HOST);
-const KEEPALIVE_PORT = Number(process.env.KEEPALIVE_PORT) || PORT;
+const KEEPALIVE_PORT = Number(process.env.KEEPALIVE_PORT) || 8155;
 const KEEPALIVE_ENABLED = Boolean(process.env.KEEPALIVE_ENABLED == 1);
 const GAMESERVER_HOST = String(process.env.GAMESERVER_HOST);
+const GAMESERVER_QUERY_PORT = Number(process.env.GAMESERVER_QUERY_PORT) || 27015;
 const API_KEY = String(process.env.API_KEY) || false;
 
 // Secure logging (for initial log of information)
@@ -49,6 +50,7 @@ slog(`  KEEPALIVE_HOST: ${chalk.bold(KEEPALIVE_HOST)} (${typeof KEEPALIVE_HOST})
 slog(`  KEEPALIVE_PORT: ${chalk.bold(KEEPALIVE_PORT)} (${typeof KEEPALIVE_PORT})`);
 slog(`  KEEPALIVE_ENABLED: ${chalk.bold(KEEPALIVE_ENABLED)} (${typeof KEEPALIVE_ENABLED})`);
 slog(`  GAMESERVER_HOST: ${chalk.bold(GAMESERVER_HOST)} (${typeof GAMESERVER_HOST})`);
+slog(`  GAMESERVER_QUERY_PORT: ${chalk.bold(GAMESERVER_QUERY_PORT)} (${typeof GAMESERVER_QUERY_PORT})`);
 slog(`  API_KEY: ${chalk.bold(API_KEY)} (${typeof API_KEY})`);
 br(); // New Line
 
@@ -69,7 +71,8 @@ let isBotReady = false;
 //---- Start modified Code ----
 const handleGamedigQuery = () => Gamedig.query({
   type: 'garrysmod',
-  host: '10.60.0.2'
+  host: GAMESERVER_HOST,
+  port: GAMESERVER_QUERY_PORT
 }).catch((error) => { console.log("Server is offline") });
 
 function activityupdate(){
