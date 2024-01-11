@@ -102,7 +102,7 @@ bot.on('ready', () => {
   console.log(`${bot.user.username} is online!`);
   console.log("I am ready!");
   console.log(`Connecting to Server ${GAMESERVER_HOST}...`);
-  bot.setInterval(activityupdate(),3000);
+  //bot.setInterval(activityupdate(),3000);
   //---- End modified Code ----
 });
 
