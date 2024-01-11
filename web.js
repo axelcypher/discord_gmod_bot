@@ -69,31 +69,35 @@ const requests = [];
 
 //create discord client
 const bot = new Discord.Client();
-
+bot.login(DISCORD_TOKEN);
 let isBotReady = false;
 
 
 
 //---- Start modified Code ----
-const handleGamedigQuery = () => Gamedig.query({
-  type: 'garrysmod',
-  host: '${GAMESERVER_HOST}',
-  port: '${GAMESERVER_QUERY_PORT}'
-}).catch((error) => { console.log("Server is offline") });
-
 function activityupdate(){
-  handleGamedigQuery().then((state) => {
+  Gamedig.query({
+      type: 'garrysmod',
+      host: '${GAMESERVER_HOST}',
+      port: '${GAMESERVER_QUERY_PORT}'
+  }).then((state) => {
       var status = state.players.length + " in " + state.map;
       bot.user.setActivity(status, { type: 'PLAYING' })
       console.log("Bot activity status updated!")
+  }).catch((error) => { 
+      console.log("Server is offline") 
   });
 };
 //---- End modified Code ----
 
-
-
-bot.on('ready', async message => {
-
+bot.on('ready', () => {
+  bot.guilds.fetch(DISCORD_GUILD).then(data => {
+    discordGuild = data;
+    isBotReady = true;
+    log(chalk.green('Bot is ready to mute them all! :)'));
+    br();
+  });
+  
   //---- Start modified Code ----
   console.log(`${bot.user.username} is online!`);
   console.log("I am ready!");
@@ -106,15 +110,6 @@ bot.on('ready', async message => {
     });
   },3000);
   //---- End modified Code ----
-
-
-  bot.guilds.fetch(DISCORD_GUILD).then(data => {
-    discordGuild = data;
-    isBotReady = true;
-    log(chalk.green('Bot is ready to mute them all! :)'));
-    br();
-  });
-  
 });
 
 bot.on('error', (err) => {
@@ -394,4 +389,4 @@ http.createServer((req, res) => {
 });
 
 
-bot.login(DISCORD_TOKEN);
+
