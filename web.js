@@ -91,6 +91,7 @@ function activityupdate(){
 //---- End modified Code ----
 
 bot.on('ready', () => {
+  
   bot.guilds.fetch(DISCORD_GUILD).then(data => {
     discordGuild = data;
     isBotReady = true;
@@ -101,9 +102,22 @@ bot.on('ready', () => {
   //---- Start modified Code ----
   console.log(`${bot.user.username} is online!`);
   console.log("I am ready!");
-  console.log(`Connecting to Server ${GAMESERVER_HOST}...`);
+  console.log(`Connecting to Server ${GAMESERVER_HOST}...`, "ready");
+      setInterval(() => {
+          gamedig.query({
+        			type: 'garrysmod',
+              host: '${GAMESERVER_HOST}',
+              port: '${GAMESERVER_QUERY_PORT}'
+        	}).then((state) => {							 
+        			bot.user.setActivity(`${state.players.length}/${state.maxplayers} online!`, {type: "PLAYING"});
+        	}).catch((error) => {
+        		  bot.user.setActivity(`Currently offline!`, {type: "PLAYING"});
+          });
+      }, 15000); 
   //bot.setInterval(activityupdate(),3000);
   //---- End modified Code ----
+
+  
 });
 
 bot.on('error', (err) => {
