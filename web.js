@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const http = require('http');
 const https = require('https');
 const chalk = require('chalk');
-const Gamedig = require('gamedig');
+const gamedig = require('gamedig');
 const packageData = require('./package');
 
 const VERSION = String(packageData.version);
@@ -39,11 +39,6 @@ const log = (...msgs) => {
 const error = (...msgs) => console.error(chalk.red(...msgs));
 const br = newLine = () => console.log();
 
-const MESSAGE_CODES = {
-    "PLAYERS": "players",
-    "INVITE": "invite",
-    "BOT_INFO": "botinfo"
-  };
 
 slog('Constants: ');
 slog(`  VERSION: ${chalk.bold(VERSION)} (${typeof VERSION})`);
@@ -73,23 +68,6 @@ bot.login(DISCORD_TOKEN);
 let isBotReady = false;
 
 
-
-//---- Start modified Code ----
-function activityupdate(){
-  Gamedig.query({
-      type: 'garrysmod',
-      host: '${GAMESERVER_HOST}',
-      port: '${GAMESERVER_QUERY_PORT}'
-  }).then((state) => {
-      var status = state.players.length + " in " + state.map;
-      bot.user.setActivity(status, { type: 'PLAYING' })
-      console.log("Bot activity status updated!")
-  }).catch((error) => { 
-      console.log("Server is offline") 
-  });
-};
-//---- End modified Code ----
-
 bot.on('ready', () => {
   
   bot.guilds.fetch(DISCORD_GUILD).then(data => {
@@ -113,7 +91,7 @@ bot.on('ready', () => {
         	}).catch((error) => {
         		  bot.user.setActivity(`Currently offline!`, {type: "PLAYING"});
           });
-      }, 15000); 
+      }, 10000); 
   //bot.setInterval(activityupdate(),3000);
   //---- End modified Code ----
 
