@@ -93,8 +93,8 @@ bot.on('ready', () => {
   setInterval(() => {
 		gamedig.query({
         		type: 'garrysmod',
-              		host: '${GAMESERVER_HOST}',
-              		port: '${GAMESERVER_QUERY_PORT}'
+              		host: $GAMESERVER_HOST,
+              		port: $GAMESERVER_QUERY_PORT
 		}).then((state) => {							 
 			bot.user.setActivity(`${state.players.length}/${state.maxplayers} online!`);
               		console.log(`${state.players.length}/${state.maxplayers} online!`);
