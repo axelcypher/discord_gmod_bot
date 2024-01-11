@@ -323,13 +323,15 @@ http.createServer((req, res) => {
       );
       error(
         "[ERROR][Request Headers]",
+        req.headers,
         JSON.stringify(req.headers)
       )
     }
   } else {
     error(
       "[ERROR][Request Headers]",
-      req.headers
+      req.headers,
+      JSON.stringify(req.headers)
     )
     if (typeof API_KEY === 'string' && req.headers.authorization !== `Basic ${API_KEY}`) {
       res.writeHead(401);
